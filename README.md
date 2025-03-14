@@ -38,7 +38,7 @@ Dự án này là một ứng dụng quản lý công việc cho phép người 
     ```bash
     pip freeze > requirements.txt
     ```
-hoặc run install.bat
+**hoặc run install.bat**
 ### 3. Chạy ứng dụng
 Hướng dẫn chạy ứng dụng Flask.
 
