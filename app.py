@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='user')
-    avatar_path = db.Column(db.String(200))
+    avatar_path = db.Column(db.String(100), default='default_avatar.png')
     tasks = db.relationship('Task', backref='user', lazy=True)
 
 class Task(db.Model):
