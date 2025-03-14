@@ -28,13 +28,13 @@ python -m pip install --upgrade pip
 pip install wheel setuptools --upgrade
 
 REM Install packages using binary wheels when possible
-pip install --only-binary :all: Flask==2.0.1
-pip install --only-binary :all: SQLAlchemy==1.4.46
-pip install --only-binary :all: Flask-SQLAlchemy==2.5.1
-pip install --only-binary :all: python-dotenv==0.19.0
-pip install --only-binary :all: Werkzeug==2.0.1
-pip install --only-binary :all: Flask-Login==0.5.0
-pip install --only-binary :all: pillow==8.4.0
+pip install Flask==2.0.1
+pip install SQLAlchemy==1.4.46
+pip install Flask-SQLAlchemy==2.5.1
+pip install python-dotenv==0.19.0
+pip install Werkzeug==2.0.1
+pip install Flask-Login==0.5.0
+pip install --only-binary :all: pillow==10.4.0
 
 REM Run the application
 echo Starting the application...
