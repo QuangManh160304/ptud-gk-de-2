@@ -1,61 +1,41 @@
 @echo off
-setlocal enabledelayedexpansion
+echo Starting setup and running application...
 
-echo =============================================
-echo 🚀 Installing dependencies...
-echo =============================================
-
-:: Kiểm tra Python đã được cài đặt hay chưa
-python --version > nul 2>&1
+REM Check if Python is installed
+python --version >nul 2>&1
 if %ERRORLEVEL% neq 0 (
-    echo ❌ Python is not installed or not in PATH! Please install Python first.
+    echo Python is not installed! Please install Python first.
     pause
     exit /b 1
 )
 
-:: Xóa môi trường ảo nếu đã tồn tại
+REM Remove existing virtual environment if exists
 if exist venv (
-    echo 🔧 Removing existing virtual environment...
+    echo Removing existing virtual environment...
     rmdir /s /q venv
 )
 
-:: Tạo môi trường ảo mới
-echo 🔧 Creating new virtual environment...
+REM Create fresh virtual environment
+echo Creating new virtual environment...
 python -m venv venv
 
-:: Kích hoạt môi trường ảo
+REM Activate and install requirements
+echo Installing requirements...
 call venv\Scripts\activate
+python -m pip install --upgrade pip
 
-:: Cập nhật pip, wheel và setuptools
-echo 🔧 Upgrading pip, wheel, and setuptools...
-python -m pip install --upgrade pip wheel setuptools
+REM Install each package separately to avoid dependency issues
+echo Installing Flask and dependencies...
+pip install Flask==2.0.1
+pip install SQLAlchemy==1.4.46
+pip install Flask-SQLAlchemy==2.5.1
+pip install python-dotenv==0.19.0
+pip install Werkzeug==2.0.1
+pip install Flask-Login==0.5.0
+pip install Pillow==10.0.0
 
-:: Cài đặt các gói từ requirements.txt
-if exist requirements.txt (
-    echo 🔧 Installing dependencies from requirements.txt...
-    pip install -r requirements.txt
-    if %ERRORLEVEL% neq 0 (
-        echo ❌ Installation failed! Trying alternative method...
-        pip install --no-cache-dir -r requirements.txt
-        if %ERRORLEVEL% neq 0 (
-            echo ❌ Installation failed! Please check the error messages above.
-            pause
-            exit /b 1
-        )
-    )
-) else (
-    echo ❌ No requirements.txt found! Please add it to the project folder.
-    pause
-    exit /b 1
-)
-
-:: Hoàn thành cài đặt
-echo =============================================
-echo ✅ Installation completed successfully!
-echo =============================================
-
-:: Chạy ứng dụng
-echo 🚀 Starting server...
+REM Run the application
+echo Starting the application...
 python app.py
 
 pause
