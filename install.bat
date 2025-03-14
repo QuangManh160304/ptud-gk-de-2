@@ -1,32 +1,61 @@
 @echo off
-echo Starting setup and running application...
+setlocal enabledelayedexpansion
 
-REM Check if Python is installed
-python --version >nul 2>&1
+echo =============================================
+echo 🚀 Installing dependencies...
+echo =============================================
+
+:: Kiểm tra Python đã được cài đặt hay chưa
+python --version > nul 2>&1
 if %ERRORLEVEL% neq 0 (
-    echo Python is not installed! Please install Python first.
+    echo ❌ Python is not installed or not in PATH! Please install Python first.
     pause
     exit /b 1
 )
 
-REM Remove existing virtual environment if exists
+:: Xóa môi trường ảo nếu đã tồn tại
 if exist venv (
-    echo Removing existing virtual environment...
+    echo 🔧 Removing existing virtual environment...
     rmdir /s /q venv
 )
 
-REM Create fresh virtual environment
-echo Creating new virtual environment...
+:: Tạo môi trường ảo mới
+echo 🔧 Creating new virtual environment...
 python -m venv venv
 
-REM Activate and install requirements
-echo Installing requirements...
+:: Kích hoạt môi trường ảo
 call venv\Scripts\activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
 
-REM Run the application
-echo Starting the application...
+:: Cập nhật pip, wheel và setuptools
+echo 🔧 Upgrading pip, wheel, and setuptools...
+python -m pip install --upgrade pip wheel setuptools
+
+:: Cài đặt các gói từ requirements.txt
+if exist requirements.txt (
+    echo 🔧 Installing dependencies from requirements.txt...
+    pip install -r requirements.txt
+    if %ERRORLEVEL% neq 0 (
+        echo ❌ Installation failed! Trying alternative method...
+        pip install --no-cache-dir -r requirements.txt
+        if %ERRORLEVEL% neq 0 (
+            echo ❌ Installation failed! Please check the error messages above.
+            pause
+            exit /b 1
+        )
+    )
+) else (
+    echo ❌ No requirements.txt found! Please add it to the project folder.
+    pause
+    exit /b 1
+)
+
+:: Hoàn thành cài đặt
+echo =============================================
+echo ✅ Installation completed successfully!
+echo =============================================
+
+:: Chạy ứng dụng
+echo 🚀 Starting server...
 python app.py
 
 pause
