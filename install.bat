@@ -24,7 +24,10 @@ echo Installing requirements...
 call venv\Scripts\activate
 python -m pip install --upgrade pip
 
-REM Install each package separately to avoid dependency issues
+REM Install wheel first
+pip install wheel
+
+REM Install each package separately
 echo Installing Flask and dependencies...
 pip install Flask==2.0.1
 pip install SQLAlchemy==1.4.46
@@ -32,7 +35,7 @@ pip install Flask-SQLAlchemy==2.5.1
 pip install python-dotenv==0.19.0
 pip install Werkzeug==2.0.1
 pip install Flask-Login==0.5.0
-pip install Pillow==10.0.0
+pip install Pillow==9.5.0
 
 REM Run the application
 echo Starting the application...
