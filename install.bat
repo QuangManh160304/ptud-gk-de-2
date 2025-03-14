@@ -1,17 +1,32 @@
 @echo off
-echo Starting installation...
+echo Starting setup and running application...
 
-REM Check if Node.js is installed
-where node >nul 2>nul
+REM Check if Python is installed
+python --version >nul 2>&1
 if %ERRORLEVEL% neq 0 (
-    echo Node.js is not installed! Please install Node.js first.
+    echo Python is not installed! Please install Python first.
     pause
     exit /b 1
 )
 
-REM Install dependencies
-echo Installing dependencies...
-npm install
+REM Remove existing virtual environment if exists
+if exist venv (
+    echo Removing existing virtual environment...
+    rmdir /s /q venv
+)
 
-echo Installation complete!
+REM Create fresh virtual environment
+echo Creating new virtual environment...
+python -m venv venv
+
+REM Activate and install requirements
+echo Installing requirements...
+call venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+
+REM Run the application
+echo Starting the application...
+python app.py
+
 pause
