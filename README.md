@@ -13,7 +13,7 @@ Dự án này là một ứng dụng quản lý công việc cho phép người 
    git clone https://github.com/QuangManh160304/ptud-gk-de-2.git
    cd ptud-gk-de-2
    ```
-**run install.bat hoặc**
+**run install.bat hoặc**  
 2. **Tạo môi trường ảo**
    - Trên Windows:
 
